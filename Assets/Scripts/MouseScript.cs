@@ -1,0 +1,105 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
+
+public class MouseScript : MonoBehaviour
+{
+    // Start is called before the first frame update
+
+    NavMeshAgent agent;
+    Transform target = null;
+    public int maxHealth = 3;
+    public Canvas healthBar = null;
+    public Slider healthSlider = null;
+    int health = 0;
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
+    void Start()
+    {
+        health = maxHealth;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Cake"))
+        { 
+            Destroy(collision.gameObject);
+            Destroy(gameObject);
+        }
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            health--;
+            
+            if (health <= 0)
+            {
+                Destroy(collision.gameObject);
+                GameScore.instance.AddScore(1);
+            }
+        }
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        if (healthSlider != null)
+        {
+            healthSlider.value = (float)health / (float)maxHealth;
+            Debug.Log(health);
+            Debug.Log(maxHealth);
+            Debug.Log((float)health / (float)maxHealth);
+        }
+
+        GameObject[] cakes = GameObject.FindGameObjectsWithTag("Cake");
+
+        float shortestDistance = Mathf.Infinity;
+        GameObject nearestCake = null;
+
+        // Iterate through all cake objects to find the nearest one
+        foreach (GameObject cake in cakes)
+        {
+            float distance = Vector3.Distance(transform.position, cake.transform.position);
+            if (distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                nearestCake = cake;
+            }
+        }
+
+        // If a nearest cake is found, move towards it
+        if (nearestCake != null && Vector3.Distance(nearestCake.transform.position, transform.position) <= 10)
+        {
+            agent = GetComponent<NavMeshAgent>();
+            agent.SetDestination(nearestCake.transform.position);
+            target = nearestCake.transform;
+        }
+        else
+        {
+            agent = GetComponent<NavMeshAgent>();
+            if(agent.remainingDistance <= agent.stoppingDistance)
+            {
+                agent.SetDestination(RandomPoint());
+            }
+        }
+
+        if (healthBar != null)
+        {
+            healthBar.transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
+        }
+    }
+    
+    public Vector3 RandomPoint()
+    {
+        float walkRadius = 10f;
+        Vector3 pos = Vector3.zero;
+        Vector3 random = Random.insideUnitSphere * walkRadius;
+        random += transform.position;
+        if(NavMesh.SamplePosition(random, out NavMeshHit hit, walkRadius, 1))
+        {
+            pos = hit.position;
+        }
+        return pos;
+    }
+}
