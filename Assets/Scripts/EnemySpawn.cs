@@ -10,7 +10,7 @@ public class EnemySpawn : MonoBehaviour
     float lastSpawn = 0.0f;
     public float range = 1.0f;
 
-    public GameObject entity;
+    public GameObject[] entitys;
     void Start()
     {
         
@@ -25,17 +25,13 @@ public class EnemySpawn : MonoBehaviour
             lastSpawn %= delay;
             Spawn();
         }
-        if (GameObject.FindWithTag("Cake") == null)
-        {
-            ScoreManager.instance.AddScore(GameScore.instance.GetScore());
-            SceneManager.LoadScene("ScoreBoard");
-        }
     }
 
     void Spawn()
     {
-        if(entity == null) return;
-        GameObject spawn = Instantiate(entity);
+        if(entitys.Length == 0) return;
+        GameObject randomEntity = entitys[Random.Range(0, entitys.Length)];
+        GameObject spawn = Instantiate(randomEntity);
         spawn.transform.SetParent(transform);
         spawn.transform.position = transform.position;
     }

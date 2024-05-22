@@ -9,6 +9,7 @@ public class Lobby_Menu : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("Level1");
+        if(GameScore.instance != null) GameScore.instance.ResetScore();
     }
     public void MainMenu()
     {

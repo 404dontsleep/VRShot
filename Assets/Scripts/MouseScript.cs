@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -12,12 +13,15 @@ public class MouseScript : MonoBehaviour
     NavMeshAgent agent;
     Transform target = null;
     public int maxHealth = 3;
-    public Canvas healthBar = null;
-    public Slider healthSlider = null;
-    int health = 0;
+    private Canvas healthBar = null;
+    private Slider healthSlider = null;
+    public AudioSource destroySound = null;
+    private int health = 0;
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        healthSlider = GetComponentInChildren<Slider>();
+        healthBar = GetComponentInChildren<Canvas>();
     }
     void Start()
     {
@@ -30,26 +34,27 @@ public class MouseScript : MonoBehaviour
             Destroy(collision.gameObject);
             Destroy(gameObject);
         }
-        if (collision.gameObject.CompareTag("Bullet"))
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Bullet"))
         {
+            if (destroySound != null) destroySound.Play();
             health--;
-            
+            Destroy(other.gameObject);
             if (health <= 0)
             {
-                Destroy(collision.gameObject);
+                Destroy(gameObject);
                 GameScore.instance.AddScore(1);
             }
         }
     }
     // Update is called once per frame
     void Update()
-    {
+    {   
         if (healthSlider != null)
         {
             healthSlider.value = (float)health / (float)maxHealth;
-            Debug.Log(health);
-            Debug.Log(maxHealth);
-            Debug.Log((float)health / (float)maxHealth);
         }
 
         GameObject[] cakes = GameObject.FindGameObjectsWithTag("Cake");

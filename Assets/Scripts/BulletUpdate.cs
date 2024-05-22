@@ -35,11 +35,6 @@ public class BulletUpdate : MonoBehaviour
             {
                 Destroy(gameObject);
             }
-            else if (other.CompareTag("Enemy"))
-            {
-                GameScore.instance.AddScore(1);
-                Destroy(other.gameObject);
-            }
         }
     }
 }
