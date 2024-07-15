@@ -918,6 +918,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913d98d17700c5a48bb0ac39ba251753, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartButton:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Start Button
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: ee7544d9-7f48-4899-8b75-bd24bd3462fb
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -4289430672226363583, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!4 &798740258
 Transform:
   m_ObjectHideFlags: 0
@@ -1868,6 +1880,10 @@ PrefabInstance:
     - target: {fileID: 3479269272842273529, guid: e07ab705c22cecb44be6835072f1f8f4, type: 3}
       propertyPath: m_Name
       value: DefaultSetup
+      objectReference: {fileID: 0}
+    - target: {fileID: 6561760017840585414, guid: e07ab705c22cecb44be6835072f1f8f4, type: 3}
+      propertyPath: m_RequestedTrackingOriginMode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7583758107226363709, guid: e07ab705c22cecb44be6835072f1f8f4, type: 3}
       propertyPath: m_Enabled

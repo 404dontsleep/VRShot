@@ -396,6 +396,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DefaultSetup
       objectReference: {fileID: 0}
+    - target: {fileID: 6561760017840585414, guid: e07ab705c22cecb44be6835072f1f8f4, type: 3}
+      propertyPath: m_RequestedTrackingOriginMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7583758107226363709, guid: e07ab705c22cecb44be6835072f1f8f4, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -839,7 +843,14 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1. Hello\t100
+  m_text: '1. 25/05/2024\t100
+
+    2. 25/05/2024\t88
+
+    3. 25/05/2024\t55
+
+    4.
+    25/05/2024\t1'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
